@@ -1,4 +1,5 @@
-import 'package:whatsapp_clone/features/screens/startup_screen.dart';
+import 'package:whatsapp_clone/features/startup/screens/startup_screen.dart';
+import 'package:whatsapp_clone/router.dart';
 
 import 'widgets/firebase_options.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
           foregroundColor: textColor,
         ),
       ),
+      onGenerateRoute: (settings)=>generateRoute(settings),
       home: const ResponsiveLayout(
         webScreenLayout: WebLayoutScreen(),
         mobileScreenLayout: StartUpScreen(),
