@@ -1,4 +1,6 @@
-import 'firebase_options.dart';
+import 'package:whatsapp_clone/features/screens/startup_screen.dart';
+
+import 'widgets/firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/data/colors.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -30,7 +32,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const ResponsiveLayout(
         webScreenLayout: WebLayoutScreen(),
-        mobileScreenLayout: MobileLayoutScreen(),
+        mobileScreenLayout: StartUpScreen(),
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 const blackColor = Colors.black;
 const whiteColor = Colors.white;
+const blueColor = Color.fromRGBO(19, 185, 253, 1);
 const tabColor = Color.fromRGBO(0, 167, 131, 1);
 const messageColor = Color.fromRGBO(5, 96, 98, 1);
 const appBarColor = Color.fromRGBO(31, 44, 52, 1);
