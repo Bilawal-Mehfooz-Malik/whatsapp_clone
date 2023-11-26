@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/data/colors.dart';
+import 'package:country_picker/country_picker.dart';
 import 'package:whatsapp_clone/shared_features/custom_button.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -12,6 +13,39 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  Country? countryDetails;
+  final countryCodeController = TextEditingController();
+  final phoneNumberController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    countryCodeController.dispose();
+    phoneNumberController.dispose();
+  }
+
+  // Borders for text fields
+  final border = const UnderlineInputBorder(
+    borderSide: BorderSide(color: tabColor),
+  );
+
+  final focusedBorder = const UnderlineInputBorder(
+    borderSide: BorderSide(color: tabColor, width: 2),
+  );
+
+  void pickCountry() {
+    showCountryPicker(
+      context: context,
+      showPhoneCode: true,
+      onSelect: (Country country) {
+        setState(() {
+          countryDetails = country;
+          countryCodeController.text = country.phoneCode;
+        });
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -36,48 +70,63 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   children: [
                     // Select Country Button
-                    DropdownButton(
-                      items: [
-                        DropdownMenuItem(
-                          alignment: Alignment.center,
-                          child: const Text(
-                            'Choose a country',
-                            style: TextStyle(color: whiteColor),
-                          ),
-                          onTap: () {},
+                    InkWell(
+                      onTap: pickCountry,
+                      child: InputDecorator(
+                        decoration: InputDecoration(
+                          enabledBorder: border,
+                          focusedBorder: focusedBorder,
                         ),
-                      ],
-                      onChanged: null,
-                      isExpanded: true,
-                      dropdownColor: tabColor,
-                      iconEnabledColor: tabColor,
-                      iconDisabledColor: tabColor,
-                      style: const TextStyle(color: whiteColor),
-                      underline: Container(height: 2, color: tabColor),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            const Spacer(),
+                            Text(
+                              countryDetails != null
+                                  ? countryDetails!.name
+                                  : 'Choose a country',
+                              style: const TextStyle(color: whiteColor),
+                            ),
+                            const Spacer(),
+                            const Icon(Icons.arrow_drop_down, color: tabColor),
+                          ],
+                        ),
+                      ),
                     ),
 
                     // Country code and Phone number field
-                    const Row(
+                    Row(
                       children: [
                         // Country code input field
                         SizedBox(
                           width: 80,
                           child: TextField(
+                            readOnly: true,
+                            cursorColor: tabColor,
                             textAlign: TextAlign.center,
+                            controller: countryCodeController,
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
                               prefixText: '+',
+                              enabledBorder: border,
+                              focusedBorder: border,
                             ),
                           ),
                         ),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
 
                         // Phone number field
                         Expanded(
                           flex: 3,
                           child: TextField(
-                            decoration:
-                                InputDecoration(hintText: 'Phone number'),
+                            decoration: InputDecoration(
+                              hintText: 'Phone number',
+                              enabledBorder: border,
+                              focusedBorder: focusedBorder,
+                            ),
+                            cursorColor: tabColor,
+                            controller: phoneNumberController,
+                            keyboardType: TextInputType.number,
                           ),
                         )
                       ],
@@ -99,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 140),
                 child: CustomButton(text: 'Next', onPressed: () {}),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 12),
             ],
           ),
         ),
