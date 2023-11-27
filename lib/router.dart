@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp_clone/shared_features/error.dart';
+import 'package:whatsapp_clone/shared_features/error_screen.dart';
 import 'package:whatsapp_clone/features/auth/screens/otp_screen.dart';
 import 'package:whatsapp_clone/features/auth/screens/login_screen.dart';
 

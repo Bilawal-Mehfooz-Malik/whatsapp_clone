@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/data/colors.dart';
 import 'package:country_picker/country_picker.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/shared_features/custom_button.dart';
+import 'package:whatsapp_clone/features/auth/controller/auth_controller.dart';
+import 'package:whatsapp_clone/shared_features/error_messages_structure.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   static const routeName = '/login-screen';
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   Country? countryDetails;
   final countryCodeController = TextEditingController();
   final phoneNumberController = TextEditingController();
@@ -44,6 +47,20 @@ class _LoginScreenState extends State<LoginScreen> {
         });
       },
     );
+  }
+
+  void sendPhoneNumber() {
+    String phoneNumber = phoneNumberController.text.trim();
+
+    if (countryDetails == null || phoneNumber.isEmpty) {
+      showErrorDialog(
+          context: context, content: 'Invalid country or phone number.');
+      return;
+    }
+
+    ref
+        .read(authControllerProvider)
+        .signInWithPhone(context, '+${countryDetails!.phoneCode}$phoneNumber');
   }
 
   @override
@@ -146,7 +163,10 @@ class _LoginScreenState extends State<LoginScreen> {
               // Next Button
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 140),
-                child: CustomButton(text: 'Next', onPressed: () {}),
+                child: CustomButton(
+                  text: 'Next',
+                  onPressed: sendPhoneNumber,
+                ),
               ),
               const SizedBox(height: 12),
             ],
