@@ -1,13 +1,11 @@
-import 'package:whatsapp_clone/features/startup/screens/startup_screen.dart';
-import 'package:whatsapp_clone/router.dart';
-
 import 'widgets/firebase_options.dart';
 import 'package:flutter/material.dart';
+import 'package:whatsapp_clone/router.dart';
 import 'package:whatsapp_clone/data/colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:whatsapp_clone/modules/responsive_layout.dart';
 import 'package:whatsapp_clone/screens/web_layout_screen.dart';
-import 'package:whatsapp_clone/screens/mobile_layout_screen.dart';
+import 'package:whatsapp_clone/features/startup/screens/startup_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
