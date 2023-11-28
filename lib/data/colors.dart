@@ -15,3 +15,6 @@ const chatBarMessage = Color.fromRGBO(30, 36, 40, 1);
 const backgroundColor = Color.fromRGBO(19, 28, 33, 1);
 const senderMessageColor = Color.fromRGBO(37, 45, 49, 1);
 const mobileChatBoxColor = Color.fromRGBO(31, 44, 52, 1);
+const lightTabColor = Color.fromRGBO(0, 116, 91, 1);
+const lightGreyColor = Colors.black54;
+const lightBlueColor = Color.fromRGBO(29, 160, 211, 1);

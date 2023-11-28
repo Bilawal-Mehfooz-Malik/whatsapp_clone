@@ -1,7 +1,9 @@
+import 'package:whatsapp_clone/features/auth/screens/otp_screen.dart';
+
 import 'widgets/firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/router.dart';
-import 'package:whatsapp_clone/data/colors.dart';
+import 'package:whatsapp_clone/data/themes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/modules/responsive_layout.dart';
@@ -23,13 +25,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Whatsapp Clone',
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: backgroundColor,
-        appBarTheme: const AppBarTheme().copyWith(
-          foregroundColor: textColor,
-        ),
-      ),
+      theme: lightTheme,
+      darkTheme: darkTheme,
       onGenerateRoute: (settings) => generateRoute(settings),
       home: const ResponsiveLayout(
         webScreenLayout: WebLayoutScreen(),

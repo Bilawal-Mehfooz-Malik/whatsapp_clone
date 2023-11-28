@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp_clone/data/colors.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -15,11 +14,11 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: tabColor,
+        // backgroundColor: tabColor,
         minimumSize: const Size(double.infinity, 50),
       ),
       onPressed: onPressed,
-      child: Text(text, style: const TextStyle(color: blackColor)),
+      child: Text(text),
     );
   }
 }

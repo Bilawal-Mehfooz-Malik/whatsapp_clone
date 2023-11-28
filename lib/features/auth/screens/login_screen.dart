@@ -36,6 +36,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     borderSide: BorderSide(color: tabColor, width: 2),
   );
 
+  // pick country button method
   void pickCountry() {
     showCountryPicker(
       context: context,
@@ -49,6 +50,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     );
   }
 
+  // send phone number method attached to next button
   void sendPhoneNumber() {
     String phoneNumber = phoneNumberController.text.trim();
 
@@ -65,12 +67,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final lightTheme = Theme.of(context).brightness == Brightness.light;
+    final textColor = lightTheme ? lightTabColor : tabColor;
+    final bgColor = lightTheme ? whiteColor : backgroundColor;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          backgroundColor: backgroundColor,
+          backgroundColor: bgColor,
           title: const Text('Enter your phone number'),
         ),
         body: Padding(
@@ -102,10 +107,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               countryDetails != null
                                   ? countryDetails!.name
                                   : 'Choose a country',
-                              style: const TextStyle(color: whiteColor),
                             ),
                             const Spacer(),
-                            const Icon(Icons.arrow_drop_down, color: tabColor),
+                            Icon(Icons.arrow_drop_down, color: textColor),
                           ],
                         ),
                       ),
@@ -119,7 +123,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           width: 80,
                           child: TextField(
                             readOnly: true,
-                            cursorColor: tabColor,
+                            cursorColor: textColor,
                             textAlign: TextAlign.center,
                             controller: countryCodeController,
                             keyboardType: TextInputType.number,
@@ -141,7 +145,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               enabledBorder: border,
                               focusedBorder: focusedBorder,
                             ),
-                            cursorColor: tabColor,
+                            cursorColor: textColor,
                             controller: phoneNumberController,
                             keyboardType: TextInputType.number,
                           ),
@@ -151,9 +155,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                     // Carrier charges Text
                     const SizedBox(height: 16),
-                    const Text(
+                    Text(
                       'Carrier charges may apply',
-                      style: TextStyle(color: greyColor),
+                      style: TextStyle(
+                        color: lightTheme ? lightGreyColor : greyColor,
+                      ),
                     ),
                   ],
                 ),

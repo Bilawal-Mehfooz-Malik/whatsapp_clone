@@ -7,6 +7,7 @@ import 'package:whatsapp_clone/features/auth/screens/login_screen.dart';
 class StartUpScreen extends StatelessWidget {
   const StartUpScreen({super.key});
 
+  //Login Screen method
   void navigateToLoginScreen(BuildContext context) {
     Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
   }

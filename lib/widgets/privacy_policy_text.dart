@@ -6,22 +6,25 @@ class PrivacyPolicyText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final lightTheme = Theme.of(context).brightness == Brightness.light;
+    final textColor = lightTheme ? lightGreyColor : greyColor;
+    final textLinkColor = lightTheme ? lightBlueColor : blueColor;
     return RichText(
       textAlign: TextAlign.center,
-      text: const TextSpan(
-        style: TextStyle(color: greyColor),
+      text: TextSpan(
+        style: TextStyle(color: textColor),
         children: <TextSpan>[
-          TextSpan(text: 'Read our'),
+          const TextSpan(text: 'Read our'),
           TextSpan(
             text: ' Privacy and Policy',
-            style: TextStyle(color: blueColor),
+            style: TextStyle(color: textLinkColor),
           ),
-          TextSpan(text: '. Tap "Agree and Continue" to accept the '),
+          const TextSpan(text: '. Tap "Agree and Continue" to accept the '),
           TextSpan(
             text: 'Terms of Serivice',
-            style: TextStyle(color: blueColor),
+            style: TextStyle(color: textLinkColor),
           ),
-          TextSpan(text: '.'),
+          const TextSpan(text: '.'),
         ],
       ),
     );

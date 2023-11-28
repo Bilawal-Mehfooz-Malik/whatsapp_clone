@@ -1,18 +1,84 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_clone/data/colors.dart';
+import 'package:whatsapp_clone/features/auth/controller/auth_controller.dart';
 
-class OtpScreen extends StatefulWidget {
-  const OtpScreen({super.key, required this.verificationId});
+class OtpScreen extends ConsumerWidget {
+  const OtpScreen({
+    super.key,
+    required this.phoneNumber,
+    required this.verificationId,
+  });
 
+  final String phoneNumber;
   final String verificationId;
   static const String routeName = '/otp-screen';
 
-  @override
-  State<OtpScreen> createState() => _OtpScreenState();
-}
+  void verifyOtp(WidgetRef ref, BuildContext context, String otp) {
+    ref.read(authControllerProvider).verifyOtp(
+          context,
+          verificationId,
+          otp,
+        );
+  }
 
-class _OtpScreenState extends State<OtpScreen> {
   @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final lightTheme = Theme.of(context).brightness == Brightness.light;
+    final textColor = lightTheme ? lightTabColor : tabColor;
+    final bgColor = lightTheme ? whiteColor : backgroundColor;
+    final size = MediaQuery.of(context).size;
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        backgroundColor: bgColor,
+        foregroundColor: textColor,
+        title: Text('Verify $phoneNumber'),
+      ),
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 20),
+            const Text('We have sent an SMS with a code.'),
+
+            // Otp input field
+            SizedBox(
+              width: size.width * 0.35,
+              child: TextField(
+                cursorColor: textColor,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 20),
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  hintText: '- - - - - -',
+                  hintStyle: TextStyle(
+                    fontSize: 30,
+                  ),
+                ),
+                onChanged: (val) {
+                  if (val.length == 6) {
+                    verifyOtp(ref, context, val.trim());
+                  }
+                },
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            const Text('Enter a 6-digit code'),
+
+            // Resend code button
+            TextButton(
+              onPressed: () {},
+              child: Text(
+                'Resend code',
+                style: TextStyle(color: textColor),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
