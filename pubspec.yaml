@@ -41,6 +41,7 @@ dependencies:
   cloud_firestore: ^4.13.2
   flutter_riverpod: ^2.4.9
   image_picker: ^1.0.4
+  emoji_picker_flutter: ^1.6.3
 
 dev_dependencies:
   flutter_test:
