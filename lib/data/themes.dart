@@ -27,7 +27,6 @@ final darkTheme = ThemeData.dark().copyWith(
       backgroundColor: const MaterialStatePropertyAll(tabColor),
     ),
   ),
-  
 );
 
 final lightTheme = ThemeData.light().copyWith(

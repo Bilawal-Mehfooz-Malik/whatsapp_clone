@@ -1,5 +1,3 @@
-import 'package:whatsapp_clone/features/auth/screens/otp_screen.dart';
-
 import 'widgets/firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/router.dart';

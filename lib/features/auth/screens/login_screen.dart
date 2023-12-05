@@ -56,7 +56,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
     if (countryDetails == null || phoneNumber.isEmpty) {
       showErrorDialog(
-          context: context, content: 'Invalid country or phone number.');
+        context: context,
+        content: 'Invalid country or phone number.',
+      );
       return;
     }
 
