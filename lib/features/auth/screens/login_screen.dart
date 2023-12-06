@@ -51,7 +51,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   // send phone number method attached to next button
-  void sendPhoneNumber() {
+  void sendPhoneNumber() async {
     String phoneNumber = phoneNumberController.text.trim();
 
     if (countryDetails == null || phoneNumber.isEmpty) {
@@ -61,7 +61,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       );
       return;
     }
-
     ref
         .read(authControllerProvider)
         .signInWithPhone(context, '+${countryDetails!.phoneCode}$phoneNumber');

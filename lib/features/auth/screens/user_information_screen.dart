@@ -1,21 +1,25 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/data/colors.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:whatsapp_clone/shared_features/image_picker.dart';
 import 'package:whatsapp_clone/shared_features/custom_button.dart';
 import 'package:whatsapp_clone/shared_features/pic_modal_sheet.dart';
+import 'package:whatsapp_clone/shared_features/error_messages_structure.dart';
+import 'package:whatsapp_clone/features/auth/controller/auth_controller.dart';
 
-class UserInfromationScreen extends StatefulWidget {
+class UserInfromationScreen extends ConsumerStatefulWidget {
   const UserInfromationScreen({super.key});
 
   static const routeName = '/user-information';
 
   @override
-  State<UserInfromationScreen> createState() => _UserInfromationScreenState();
+  ConsumerState<UserInfromationScreen> createState() =>
+      _UserInfromationScreenState();
 }
 
-class _UserInfromationScreenState extends State<UserInfromationScreen> {
+class _UserInfromationScreenState extends ConsumerState<UserInfromationScreen> {
   File? _image;
   var _showEmoji = false;
   final _nameController = TextEditingController();
@@ -29,6 +33,9 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
   void _toggleEmoji() {
     setState(() {
       _showEmoji = !_showEmoji;
+      if (_showEmoji) {
+        FocusScope.of(context).unfocus();
+      }
     });
   }
 
@@ -50,6 +57,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
     }
   }
 
+  // Upon tapping icon camera it open this bottom sheet
   void _bottomSheetStructure() {
     showModalBottomSheet(
       enableDrag: true,
@@ -61,7 +69,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
           padding: const EdgeInsets.all(20),
           child: ConstrainedBox(
             constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height - 700),
+                maxHeight: MediaQuery.of(context).size.height - 650),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -95,6 +103,22 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
         );
       },
     );
+  }
+
+  //saving data to firestore
+  void _storeUserData() async {
+    final name = _nameController.text.trim();
+
+    if (name.isEmpty) {
+      showErrorDialog(
+          context: context, content: 'Please enter a valid username.');
+    }
+
+    if (name.isNotEmpty) {
+      ref
+          .read(authControllerProvider)
+          .saveUserDataToFirebase(name, _image, context);
+    }
   }
 
   @override
@@ -140,7 +164,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                           ),
                     Positioned(
                       right: 0,
-                      bottom: 0,
+                      bottom: 8,
                       child: IconButton(
                         onPressed: _bottomSheetStructure,
                         icon: const Icon(Icons.add_a_photo, color: tabColor),
@@ -169,6 +193,8 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                         },
                       ),
                     ),
+
+                    // emoji icon
                     IconButton(
                       onPressed: _toggleEmoji,
                       icon: const Icon(Icons.emoji_emotions_outlined),
@@ -176,23 +202,25 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                   ],
                 ),
                 _showEmoji ? const SizedBox(height: 40) : const Spacer(),
+
+                // Next Button
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     vertical: 8,
                     horizontal: 145,
                   ),
-                  child: CustomButton(text: 'Next', onPressed: () {}),
+                  child: CustomButton(text: 'Next', onPressed: _storeUserData),
                 ),
                 _showEmoji
                     ? Expanded(
                         child: EmojiPicker(
+                          textEditingController: _nameController,
                           config: Config(
                             columns: 8,
                             indicatorColor: tabColor,
                             iconColorSelected: tabColor,
                             bgColor: lightMode ? whiteColor : backgroundColor,
                           ),
-                          textEditingController: _nameController,
                         ),
                       )
                     : const SizedBox(),

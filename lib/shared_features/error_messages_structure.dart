@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/data/colors.dart';
 
+const border =
+    BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.zero));
+
 void showSnack({required BuildContext context, required String content}) {
   ScaffoldMessenger.of(context).clearSnackBars();
   ScaffoldMessenger.of(context).showSnackBar(
@@ -22,8 +25,28 @@ void showErrorDialog({required BuildContext context, required String content}) {
               child: const Text('OK', style: TextStyle(color: tabColor)),
             ),
           ],
-          shape: const BeveledRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.zero)),
+          shape: border,
         );
       });
+}
+
+void showCircularDialog({required BuildContext context, required String text}) {
+  showDialog(
+    context: context,
+    builder: (ctx) {
+      return Dialog(
+        shape: border,
+        child: Padding(
+          padding: const EdgeInsets.all(40),
+          child: Row(
+            children: [
+              const CircularProgressIndicator(color: tabColor),
+              const SizedBox(width: 16),
+              Text(text),
+            ],
+          ),
+        ),
+      );
+    },
+  );
 }

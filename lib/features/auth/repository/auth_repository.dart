@@ -1,10 +1,14 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_clone/modules/user_model.dart';
+import 'package:whatsapp_clone/screens/mobile_layout_screen.dart';
 import 'package:whatsapp_clone/features/auth/screens/otp_screen.dart';
-import 'package:whatsapp_clone/features/auth/screens/user_information_screen.dart';
 import 'package:whatsapp_clone/shared_features/error_messages_structure.dart';
+import 'package:whatsapp_clone/features/auth/screens/user_information_screen.dart';
+import 'package:whatsapp_clone/shared_features/repositories/common_firebase_storage_repository.dart';
 
 final authRepositoryProvider = Provider((ref) => AuthRepository(
       auth: FirebaseAuth.instance,
@@ -65,6 +69,44 @@ class AuthRepository {
           context: context,
           content: e.message!,
         );
+      }
+    }
+  }
+
+  void saveUserDataToFirebase({
+    required String name,
+    required ProviderRef ref,
+    required File? profilePic,
+    required BuildContext context,
+  }) async {
+    try {
+      String? photoUrl;
+      String uid = auth.currentUser!.uid;
+      if (profilePic != null) {
+        photoUrl = await ref
+            .read(commonFirebaseStorageRepositoryProvider)
+            .storeFileToFirebase('profilePic/$uid', profilePic);
+
+        var user = UserModel(
+          uid: uid,
+          name: name,
+          isOnline: true,
+          profilePic: photoUrl,
+          phoneNumber: auth.currentUser!.uid,
+          groupId: [],
+        );
+
+        await firestore.collection('users').doc(uid).set(user.toMap());
+        if (context.mounted) {
+          Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (ctx) {
+            return const MobileLayoutScreen();
+          }), (route) => false);
+        }
+      }
+    } catch (e) {
+      if (context.mounted) {
+        showErrorDialog(context: context, content: e.toString());
       }
     }
   }
