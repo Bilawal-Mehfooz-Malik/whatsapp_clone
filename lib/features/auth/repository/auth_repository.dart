@@ -21,6 +21,16 @@ class AuthRepository {
   final FirebaseAuth auth;
   final FirebaseFirestore firestore;
 
+  Future<UserModel?> getCurrentUserData() async {
+    final userData =
+        await firestore.collection('users').doc(auth.currentUser?.uid).get();
+    UserModel? user;
+    if (userData.data() != null) {
+      user = UserModel.fromMap(userData.data()!);
+    }
+    return user;
+  }
+
   void signInWithPhone(String phoneNumber, BuildContext context) async {
     showCircularDialog(context: context, text: 'Connecting...');
     try {
@@ -61,8 +71,7 @@ class AuthRepository {
     required String verificationId,
   }) async {
     try {
-      showCircularDialog(
-          context: context, text: 'Verifying...');
+      showCircularDialog(context: context, text: 'Verifying...');
 
       final credential = PhoneAuthProvider.credential(
         smsCode: userOtp,
