@@ -12,7 +12,6 @@ class OtpScreen extends ConsumerWidget {
 
   final String phoneNumber;
   final String verificationId;
-  static const String routeName = '/otp-screen';
 
   void verifyOtp(WidgetRef ref, BuildContext context, String otp) {
     ref.read(authControllerProvider).verifyOtp(

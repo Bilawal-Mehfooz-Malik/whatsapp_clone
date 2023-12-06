@@ -1,6 +1,5 @@
 import 'widgets/firebase_options.dart';
 import 'package:flutter/material.dart';
-import 'package:whatsapp_clone/router.dart';
 import 'package:whatsapp_clone/data/themes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,7 +24,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
       darkTheme: darkTheme,
-      onGenerateRoute: (settings) => generateRoute(settings),
       home: const ResponsiveLayout(
         webScreenLayout: WebLayoutScreen(),
         mobileScreenLayout: StartUpScreen(),

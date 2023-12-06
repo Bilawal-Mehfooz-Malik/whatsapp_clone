@@ -9,8 +9,6 @@ import 'package:whatsapp_clone/shared_features/error_messages_structure.dart';
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
-  static const routeName = '/login-screen';
-
   @override
   ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }

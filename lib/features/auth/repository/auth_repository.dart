@@ -22,6 +22,7 @@ class AuthRepository {
   final FirebaseFirestore firestore;
 
   void signInWithPhone(String phoneNumber, BuildContext context) async {
+    showCircularDialog(context: context, text: 'Connecting...');
     try {
       await auth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
@@ -29,13 +30,21 @@ class AuthRepository {
           await auth.signInWithCredential(credential);
         },
         verificationFailed: (FirebaseAuthException e) {
+          Navigator.of(context).pop();
           throw Exception(e.message);
         },
         codeSent: (String verificationId, int? resendToken) {
-          Navigator.pushNamed(context, OtpScreen.routeName, arguments: {
-            'phoneNumber': phoneNumber,
-            'verificationId': verificationId,
-          });
+          Navigator.of(context).pop();
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (ctx) {
+                return OtpScreen(
+                  phoneNumber: phoneNumber,
+                  verificationId: verificationId,
+                );
+              },
+            ),
+          );
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
       );
@@ -52,19 +61,26 @@ class AuthRepository {
     required String verificationId,
   }) async {
     try {
+      showCircularDialog(
+          context: context, text: 'Verifying...');
+
       final credential = PhoneAuthProvider.credential(
         smsCode: userOtp,
         verificationId: verificationId,
       );
+
       await auth.signInWithCredential(credential);
+
       if (context.mounted) {
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          UserInfromationScreen.routeName,
+        Navigator.of(context).pop();
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (ctx) => const UserInfromationScreen()),
           (route) => false,
         );
       }
     } on FirebaseAuthException catch (e) {
       if (context.mounted) {
+        Navigator.of(context).pop();
         showErrorDialog(
           context: context,
           content: e.message!,
@@ -80,8 +96,10 @@ class AuthRepository {
     required BuildContext context,
   }) async {
     try {
+      showCircularDialog(context: context, text: 'Creating profile...');
       String? photoUrl;
       String uid = auth.currentUser!.uid;
+
       if (profilePic != null) {
         photoUrl = await ref
             .read(commonFirebaseStorageRepositoryProvider)
@@ -97,15 +115,20 @@ class AuthRepository {
         );
 
         await firestore.collection('users').doc(uid).set(user.toMap());
-        if (context.mounted) {
-          Navigator.pushAndRemoveUntil(context,
-              MaterialPageRoute(builder: (ctx) {
-            return const MobileLayoutScreen();
-          }), (route) => false);
-        }
+      }
+
+      if (context.mounted) {
+        Navigator.of(context).pop();
+      }
+
+      if (context.mounted) {
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (ctx) {
+          return const MobileLayoutScreen();
+        }), (route) => false);
       }
     } catch (e) {
       if (context.mounted) {
+        Navigator.of(context).pop();
         showErrorDialog(context: context, content: e.toString());
       }
     }

@@ -9,7 +9,9 @@ class StartUpScreen extends StatelessWidget {
 
   //Login Screen method
   void navigateToLoginScreen(BuildContext context) {
-    Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+      builder: (context) => const LoginScreen(),
+    ));
   }
 
   @override

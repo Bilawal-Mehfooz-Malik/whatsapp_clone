@@ -12,8 +12,6 @@ import 'package:whatsapp_clone/features/auth/controller/auth_controller.dart';
 class UserInfromationScreen extends ConsumerStatefulWidget {
   const UserInfromationScreen({super.key});
 
-  static const routeName = '/user-information';
-
   @override
   ConsumerState<UserInfromationScreen> createState() =>
       _UserInfromationScreenState();
@@ -108,7 +106,7 @@ class _UserInfromationScreenState extends ConsumerState<UserInfromationScreen> {
   //saving data to firestore
   void _storeUserData() async {
     final name = _nameController.text.trim();
-
+    FocusScope.of(context).unfocus();
     if (name.isEmpty) {
       showErrorDialog(
           context: context, content: 'Please enter a valid username.');

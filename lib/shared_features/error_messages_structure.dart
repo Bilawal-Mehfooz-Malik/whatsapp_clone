@@ -33,6 +33,7 @@ void showErrorDialog({required BuildContext context, required String content}) {
 void showCircularDialog({required BuildContext context, required String text}) {
   showDialog(
     context: context,
+    barrierDismissible: false,
     builder: (ctx) {
       return Dialog(
         shape: border,
