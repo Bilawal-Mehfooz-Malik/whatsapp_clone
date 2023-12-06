@@ -7,34 +7,38 @@ class MobileLayoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final lightMode = Theme.of(context).brightness == Brightness.light;
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          elevation: 0,
-          backgroundColor: appBarColor,
+          // elevation: 1,
+          backgroundColor: lightMode ? lightTabColor : appBarColor,
           centerTitle: false,
-          title: const Text('WhatsApp'),
+          title: const Text(
+            'WhatsApp',
+            style: TextStyle(color: whiteColor),
+          ),
           actions: [
             IconButton(
-              icon: const Icon(Icons.search),
+              icon: const Icon(Icons.search, color: whiteColor),
               onPressed: () {},
             ),
             IconButton(
-              icon: const Icon(Icons.more_vert),
+              icon: const Icon(Icons.more_vert, color: whiteColor),
               onPressed: () {},
             ),
           ],
-          bottom: const TabBar(
+          bottom: TabBar(
             indicatorWeight: 3,
-            labelColor: tabColor,
-            indicatorColor: tabColor,
+            labelColor: lightMode ? whiteColor : tabColor,
+            indicatorColor: lightMode ? whiteColor : tabColor,
             unselectedLabelColor: greyColor,
             indicatorSize: TabBarIndicatorSize.tab,
-            labelStyle: TextStyle(
+            labelStyle: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
-            tabs: [
+            tabs: const [
               Tab(
                 text: 'Chats',
               ),
@@ -50,10 +54,10 @@ class MobileLayoutScreen extends StatelessWidget {
         body: const ContactsList(),
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
-          backgroundColor: tabColor,
-          child: const Icon(
+          backgroundColor: lightMode ? lightTabColor : tabColor,
+          child: Icon(
             Icons.comment,
-            color: blackColor,
+            color: lightMode ? whiteColor : blackColor,
           ),
         ),
       ),

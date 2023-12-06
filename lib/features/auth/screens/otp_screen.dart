@@ -65,17 +65,7 @@ class OtpScreen extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 16),
-
               const Text('Enter a 6-digit code'),
-
-              // Resend code button
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  'Resend code',
-                  style: TextStyle(color: textColor),
-                ),
-              ),
             ],
           ),
         ),
