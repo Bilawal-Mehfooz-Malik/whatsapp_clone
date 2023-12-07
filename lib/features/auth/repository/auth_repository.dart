@@ -31,6 +31,7 @@ class AuthRepository {
     return user;
   }
 
+  // Sign in with phone method for Login Screen upon pressing next button
   void signInWithPhone(String phoneNumber, BuildContext context) async {
     showCircularDialog(context: context, text: 'Connecting...');
     try {
@@ -41,7 +42,7 @@ class AuthRepository {
         },
         verificationFailed: (FirebaseAuthException e) {
           Navigator.of(context).pop();
-          throw Exception(e.message);
+          showErrorDialog(context: context, content: e.message!);
         },
         codeSent: (String verificationId, int? resendToken) {
           Navigator.of(context).pop();
@@ -65,6 +66,7 @@ class AuthRepository {
     }
   }
 
+  //follow up method for verifying otp for otp screen upon pressing next button
   void verifyOtp({
     required String userOtp,
     required BuildContext context,
@@ -98,6 +100,8 @@ class AuthRepository {
     }
   }
 
+  // Follow up method for upon pressing next button in user information screen
+  //this method is called for saving data to firebase firestore.
   void saveUserDataToFirebase({
     required String name,
     required ProviderRef ref,

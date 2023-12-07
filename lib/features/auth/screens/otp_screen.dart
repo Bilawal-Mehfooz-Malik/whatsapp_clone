@@ -49,13 +49,11 @@ class OtpScreen extends ConsumerWidget {
                 child: TextField(
                   cursorColor: textColor,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 20),
                   keyboardType: TextInputType.number,
+                  style: const TextStyle(fontSize: 20),
                   decoration: const InputDecoration(
                     hintText: '- - - - - -',
-                    hintStyle: TextStyle(
-                      fontSize: 30,
-                    ),
+                    hintStyle: TextStyle(fontSize: 30),
                   ),
                   onChanged: (val) {
                     if (val.length == 6) {

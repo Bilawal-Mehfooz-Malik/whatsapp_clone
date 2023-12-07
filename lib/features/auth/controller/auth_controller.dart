@@ -32,6 +32,7 @@ class AuthController {
     authRepository.signInWithPhone(phoneNumber, context);
   }
 
+  //verifying otp method for otp screen upon pressing next button
   void verifyOtp(BuildContext context, String verificationId, String otp) {
     authRepository.verifyOtp(
       userOtp: otp,
@@ -40,6 +41,8 @@ class AuthController {
     );
   }
 
+  // upon pressing next button in user information screen 
+  //this method is called for saving data to firebase firestore.
   void saveUserDataToFirebase(
     String name,
     File? profilePic,

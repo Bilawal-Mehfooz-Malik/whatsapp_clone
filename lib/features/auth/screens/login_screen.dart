@@ -140,8 +140,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           flex: 3,
                           child: TextField(
                             decoration: InputDecoration(
-                              hintText: 'Phone number',
                               enabledBorder: border,
+                              hintText: 'Phone number',
                               focusedBorder: focusedBorder,
                             ),
                             cursorColor: textColor,
