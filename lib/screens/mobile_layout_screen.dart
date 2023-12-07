@@ -8,57 +8,68 @@ class MobileLayoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final lightMode = Theme.of(context).brightness == Brightness.light;
+    final gwColor = lightMode ? whiteColor : tabColor;
+    final wbColor = lightMode ? whiteColor : blackColor;
+
     return DefaultTabController(
-      length: 3,
+      length: 3, // Number of tabs
       child: Scaffold(
-        appBar: AppBar(
-          // elevation: 1,
-          backgroundColor: lightMode ? lightTabColor : appBarColor,
-          centerTitle: false,
-          title: const Text(
-            'WhatsApp',
-            style: TextStyle(color: whiteColor),
-          ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.search, color: whiteColor),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: const Icon(Icons.more_vert, color: whiteColor),
-              onPressed: () {},
-            ),
-          ],
-          bottom: TabBar(
-            indicatorWeight: 3,
-            labelColor: lightMode ? whiteColor : tabColor,
-            indicatorColor: lightMode ? whiteColor : tabColor,
-            unselectedLabelColor: greyColor,
-            indicatorSize: TabBarIndicatorSize.tab,
-            labelStyle: const TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-            tabs: const [
-              Tab(
-                text: 'Chats',
+        body: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              // AppBar
+              SliverAppBar(
+                pinned: true,
+                floating: true,
+                snap: true,
+                elevation: 1,
+                centerTitle: false,
+                scrolledUnderElevation: 1,
+                foregroundColor: whiteColor,
+                backgroundColor: lightMode ? lightTabColor : appBarColor,
+                title:
+                    const Text('WhatsApp', style: TextStyle(color: whiteColor)),
+                actions: [
+                  //Search Icon
+                  IconButton(
+                    icon: const Icon(Icons.search),
+                    onPressed: () {},
+                  ),
+
+                  // Options icon
+                  IconButton(
+                    icon: const Icon(Icons.more_vert),
+                    onPressed: () {},
+                  ),
+                ],
+
+                //Tab Bar
+                bottom: TabBar(
+                  indicatorWeight: 3,
+                  labelColor: gwColor,
+                  indicatorColor: gwColor,
+                  unselectedLabelColor: greyColor,
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  labelStyle: const TextStyle(fontWeight: FontWeight.bold),
+                  tabs: const [
+                    Tab(text: 'Chats'),
+                    Tab(text: 'Updates'),
+                    Tab(text: 'Calls'),
+                  ],
+                ),
               ),
-              Tab(
-                text: 'Status',
-              ),
-              Tab(
-                text: 'Calls',
-              ),
-            ],
-          ),
+            ];
+          },
+
+          // contact List
+          body: const ContactsList(),
         ),
-        body: const ContactsList(),
+
+        //Floating Button
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
-          backgroundColor: lightMode ? lightTabColor : tabColor,
-          child: Icon(
-            Icons.comment,
-            color: lightMode ? whiteColor : blackColor,
-          ),
+          backgroundColor: gwColor,
+          child: Icon(Icons.comment, color: wbColor),
         ),
       ),
     );
