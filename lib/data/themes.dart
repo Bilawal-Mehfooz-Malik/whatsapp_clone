@@ -11,11 +11,11 @@ final darkTheme = ThemeData.dark().copyWith(
   appBarTheme: const AppBarTheme().copyWith(
     foregroundColor: tabColor,
   ),
-  // inputDecorationTheme: const InputDecorationTheme().copyWith(
-  //   border: unFoucusedBorder,
-  //   focusedBorder: foucusedBorder,
-  //   enabledBorder: unFoucusedBorder,
-  // ),
+  inputDecorationTheme: const InputDecorationTheme().copyWith(
+    border: unFoucusedBorder,
+    focusedBorder: foucusedBorder,
+    enabledBorder: unFoucusedBorder,
+  ),
   textButtonTheme: TextButtonThemeData(
     style: const ButtonStyle().copyWith(
       foregroundColor: const MaterialStatePropertyAll(tabColor),

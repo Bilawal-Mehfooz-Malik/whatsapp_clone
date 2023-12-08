@@ -20,8 +20,8 @@ class AuthController {
     required this.ref,
   });
 
-  final AuthRepository authRepository;
   final ProviderRef ref;
+  final AuthRepository authRepository;
 
   Future<UserModel?> getUserData() async {
     UserModel? user = await authRepository.getCurrentUserData();
