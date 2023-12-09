@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp_clone/data/info.dart';
 import 'package:whatsapp_clone/data/colors.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_clone/features/auth/controller/auth_controller.dart';
+import 'package:whatsapp_clone/modules/user_model.dart';
+import 'package:whatsapp_clone/shared_features/loader.dart';
 import 'package:whatsapp_clone/widgets/chat_list.dart';
 
-class MobileChatScreen extends StatefulWidget {
-  const MobileChatScreen({super.key});
+class MobileChatScreen extends ConsumerStatefulWidget {
+  const MobileChatScreen({
+    super.key,
+    required this.name,
+    required this.uid,
+  });
+
+  final String name;
+  final String uid;
 
   @override
-  State<MobileChatScreen> createState() => _MobileChatScreenState();
+  ConsumerState<MobileChatScreen> createState() => _MobileChatScreenState();
 }
 
-class _MobileChatScreenState extends State<MobileChatScreen> {
+class _MobileChatScreenState extends ConsumerState<MobileChatScreen> {
   final _messageController = TextEditingController();
 
   @override
@@ -27,7 +37,24 @@ class _MobileChatScreenState extends State<MobileChatScreen> {
         centerTitle: false,
         foregroundColor: whiteColor,
         backgroundColor: appBarColor,
-        title: Text(info[0]['name'].toString()),
+        title: StreamBuilder<UserModel>(
+            stream: ref.read(authControllerProvider).userDataById(widget.uid),
+            builder: (ctx, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Loader();
+              }
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(widget.name),
+                  Text(
+                    textAlign: TextAlign.left,
+                    style: const TextStyle(fontSize: 13),
+                    snapshot.data!.isOnline ? 'online' : 'offline',
+                  ),
+                ],
+              );
+            }),
         actions: [
           IconButton(
             // VideoCall Icon

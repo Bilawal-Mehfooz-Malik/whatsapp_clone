@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:whatsapp_clone/data/colors.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/shared_features/loader.dart';
 import 'package:whatsapp_clone/shared_features/error_screen.dart';

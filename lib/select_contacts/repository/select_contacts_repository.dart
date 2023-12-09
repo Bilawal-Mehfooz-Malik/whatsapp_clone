@@ -41,7 +41,10 @@ class SelectContactRepository {
           if (context.mounted) {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (ctx) => const MobileChatScreen(),
+                builder: (ctx) => MobileChatScreen(
+                  name: userData.name,
+                  uid: userData.uid,
+                ),
               ),
             );
           }

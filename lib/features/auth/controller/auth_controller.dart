@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whatsapp_clone/features/auth/repository/auth_repository.dart';
 import 'package:whatsapp_clone/modules/user_model.dart';
+import 'package:whatsapp_clone/features/auth/repository/auth_repository.dart';
 
 final authControllerProvider = Provider((ref) {
   final authRepository = ref.watch(authRepositoryProvider);
@@ -41,7 +41,7 @@ class AuthController {
     );
   }
 
-  // upon pressing next button in user information screen 
+  // upon pressing next button in user information screen
   //this method is called for saving data to firebase firestore.
   void saveUserDataToFirebase(
     String name,
@@ -54,5 +54,9 @@ class AuthController {
       context: context,
       profilePic: profilePic,
     );
+  }
+
+  Stream<UserModel> userDataById(String userId) {
+    return authRepository.userData(userId);
   }
 }
