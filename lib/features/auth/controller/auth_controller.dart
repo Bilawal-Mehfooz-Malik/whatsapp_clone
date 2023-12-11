@@ -56,6 +56,7 @@ class AuthController {
     );
   }
 
+  // For online offline getting data
   Stream<UserModel> userDataById(String userId) {
     return authRepository.userData(userId);
   }

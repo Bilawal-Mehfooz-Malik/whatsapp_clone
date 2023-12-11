@@ -147,6 +147,7 @@ class AuthRepository {
     }
   }
 
+// For offline online getting user data
   Stream<UserModel> userData(String userId) {
     return firestore
         .collection('users')

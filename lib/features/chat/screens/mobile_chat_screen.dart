@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/data/colors.dart';
+import 'package:whatsapp_clone/widgets/chat_list.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whatsapp_clone/features/auth/controller/auth_controller.dart';
 import 'package:whatsapp_clone/modules/user_model.dart';
 import 'package:whatsapp_clone/shared_features/loader.dart';
-import 'package:whatsapp_clone/widgets/chat_list.dart';
+import 'package:whatsapp_clone/features/chat/widgets/bottom_text_field.dart';
+import 'package:whatsapp_clone/features/auth/controller/auth_controller.dart';
 
 class MobileChatScreen extends ConsumerStatefulWidget {
   const MobileChatScreen({
@@ -84,53 +85,7 @@ class _MobileChatScreenState extends ConsumerState<MobileChatScreen> {
             children: [
               //Message Sending Text Field
               Expanded(
-                child: TextField(
-                  style: const TextStyle(color: whiteColor),
-                  controller: _messageController,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: appBarColor,
-
-                    //emoji Icon
-                    prefixIcon: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Icon(
-                        Icons.emoji_emotions,
-                        color: messageIconColor,
-                      ),
-                    ),
-
-                    suffixIcon: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          // attach file icon
-                          Icon(
-                            Icons.attach_file,
-                            color: messageIconColor,
-                          ),
-                          SizedBox(width: 12),
-
-                          // camera icon
-                          Icon(
-                            Icons.camera_alt,
-                            color: messageIconColor,
-                          ),
-                        ],
-                      ),
-                    ),
-                    hintText: 'Message',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                      borderSide: const BorderSide(
-                        width: 0,
-                        style: BorderStyle.none,
-                      ),
-                    ),
-                    contentPadding: const EdgeInsets.all(10),
-                  ),
-                ),
+                child: BottomChatField(messageController: _messageController),
               ),
               const SizedBox(width: 4),
               Container(
