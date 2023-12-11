@@ -8,11 +8,7 @@ import 'package:whatsapp_clone/features/chat/widgets/bottom_text_field.dart';
 import 'package:whatsapp_clone/features/auth/controller/auth_controller.dart';
 
 class MobileChatScreen extends ConsumerStatefulWidget {
-  const MobileChatScreen({
-    super.key,
-    required this.name,
-    required this.uid,
-  });
+  const MobileChatScreen({super.key, required this.name, required this.uid});
 
   final String name;
   final String uid;
@@ -88,6 +84,8 @@ class _MobileChatScreenState extends ConsumerState<MobileChatScreen> {
                 child: BottomChatField(messageController: _messageController),
               ),
               const SizedBox(width: 4),
+
+              // Voice and send button
               Container(
                 width: 50,
                 height: 50,
