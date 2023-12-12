@@ -76,28 +76,7 @@ class _MobileChatScreenState extends ConsumerState<MobileChatScreen> {
         children: [
           //Chat List containing all messages
           const Expanded(child: ChatList()),
-
-          Row(
-            children: [
-              //Message Sending Text Field
-              Expanded(
-                child: BottomChatField(messageController: _messageController),
-              ),
-              const SizedBox(width: 4),
-
-              // Voice and send button
-              Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: tabColor,
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: const Icon(Icons.keyboard_voice_rounded),
-              ),
-            ],
-          ),
-          const SizedBox(height: 4),
+          BottomChatField(messageController: _messageController),
         ],
       ),
     );
